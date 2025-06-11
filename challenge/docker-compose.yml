@@ -1,0 +1,91 @@
+version: "3.8"
+
+services:
+  django:
+    container_name: challenge_django
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /home/app
+    command: ./setup_dev.sh
+    volumes:
+      - ./:/home/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=challenge.settings
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - challenge_network
+    tty: true
+    stdin_open: true
+
+  celery:
+    container_name: challenge_celery
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /home/app
+    command: celery -A challenge worker --loglevel=info
+    volumes:
+      - ./:/home/app
+    depends_on:
+      - postgres
+      - rabbitmq
+    env_file:
+      - .env
+    networks:
+      - challenge_network
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.11-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - challenge_network
+
+  postgres:
+    container_name: postgres
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - challenge_network
+
+  react:
+    container_name: challenge_frontend
+    image: node:24-alpine
+    working_dir: /app
+    volumes:
+      - ../challenge-app:/app
+      - /app/node_modules
+    command: sh -c "yarn install && yarn dev"
+    ports:
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - challenge_network
+    tty: true
+    stdin_open: true
+
+networks:
+  challenge_network:
+    driver: bridge

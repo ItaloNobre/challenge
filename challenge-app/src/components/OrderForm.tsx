@@ -13,7 +13,7 @@ export default function OrderForm() {
     setLoading(true);
 
     try {
-      await api.post('/order/create/', { title, description });
+      await api.post('api/v1/pedidos/', { title, description });
       navigate('/orders');
     } catch (err) {
       console.error(err);

@@ -25,8 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('order/', include("challenge.order.urls")),
-    path('core/', include("challenge.core.urls")),
+    path('api/v1/pedidos/', include("challenge.order.urls")),
+    path('api/v1/core/', include("challenge.core.urls")),
 
 ]
 if settings.DEBUG:

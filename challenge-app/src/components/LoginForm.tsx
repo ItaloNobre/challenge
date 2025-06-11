@@ -15,10 +15,10 @@ export default function LoginForm() {
   setError('');
 
   try {
-    const resp = await api.post('/core/login/', { email, password });
+    const resp = await api.post('api/v1/core/login/', { email, password });
     console.log('Resposta do login:', resp.data);
     
-    const token = resp.data.access; // 👈 ou .token, ou .access_token — veja no console
+    const token = resp.data.access;
     if (!token) throw new Error('Token de acesso não encontrado');
 
     localStorage.setItem('token', token);

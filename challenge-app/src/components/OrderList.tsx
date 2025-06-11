@@ -7,7 +7,7 @@ export default function OrderList() {
   const [loading, setLoading] = useState(true);
 
   const fetchOrders = () => {
-    api.get('/order/')
+    api.get('api/v1/pedidos/')
       .then(res => setOrders(res.data.results))
       .catch(console.error)
       .finally(() => setLoading(false));

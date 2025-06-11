@@ -39,7 +39,7 @@ Agora você pode fazer login na aplicação
 
 ### Admin
 
-Login no admin para caso queri visualizar os modelos com mais detalhes
+Login no admin para caso queira visualizar os modelos com mais detalhes
 
 + `http://localhost:8000/admin`
 + `Login: admin@gmail.com`

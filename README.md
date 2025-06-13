@@ -26,6 +26,7 @@ O objetivo da aplicação é simular um fluxo de autenticação e gerenciamento 
 
 ### Para Criar um novo ambiente virtual
 
++ `cd challenge`
 + `docker-compose build`
 + `docker-compose up`
 

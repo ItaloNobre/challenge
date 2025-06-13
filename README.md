@@ -35,7 +35,7 @@ O objetivo da aplicação é simular um fluxo de autenticação e gerenciamento 
 Agora você pode fazer login na aplicação
 
 + `http://localhost:5173`
-+ `Login: admin@gmail.com`
++ `Login: admin@admin.com`
 + `Password: admin`
 
 ### Admin
